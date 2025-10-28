@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Listado de Eventos{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h4">Listado de Eventos</h1>
+  <a class="btn btn-success" href="{% url 'crear_evento' %}">+ Crear Evento</a>
+</div>
+
+<table class="table table-striped align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>ID</th>
+      <th>Título</th>
+      <th>Descripción</th>
+      <th>Fecha</th>
+      <th>Voluntarios Asignados</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for e in eventos %}
+    <tr>
+      <td>{{ e.id }}</td>
+      <td>{{ e.titulo }}</td>
+      <td>{{ e.descripcion|truncatechars:80 }}</td>
+      <td>{{ e.fecha|date:"d/m/Y" }}</td>
+      <td>
+        {% if e.voluntarios.all %}
+          {% for v in e.voluntarios.all %}
+            <span class="badge bg-primary">{{ v.nombre }}</span>
+          {% empty %}
+            <span class="text-muted">Sin voluntarios</span>
+          {% endfor %}
+        {% else %}
+          <span class="text-muted">Sin voluntarios</span>
+        {% endif %}
+      </td>
+      <td>
+        <a class="btn btn-sm btn-info" href="{% url 'detalle_evento' e.id %}">Ver</a>
+        <a class="btn btn-sm btn-warning" href="{% url 'actualizar_evento' e.id %}">Editar</a>
+        <a class="btn btn-sm btn-danger" href="{% url 'evento_delete' e.id %}">Eliminar</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="6" class="text-center text-muted">No hay eventos registrados.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
