@@ -139,7 +139,7 @@ class Evento(models.Model):
 Proyecto desarrollado de forma colaborativa en el marco del Módulo 7 del Bootcamp Talento Digital.
 
 Integrantes
-- Joanna Torres
+- Johana Torres
 - Matias Lagos
 - Catalina Villegas 	
 
