@@ -1,4 +1,18 @@
 {% extends 'base.html' %}
-{%block title%}Gestionar Voluntarios{%endblock%}
-{%block content%}
-{%endblock%}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+
+<section class="py-5 text-center bg-light rounded shadow-sm">
+    <div class="container py-5">
+        <h1 class="display-5 fw-bold text-primary mb-3">Bienvenido a la Plataforma ONG</h1>
+        <p class="lead text-secondary mb-4">
+            Administra tus <strong>voluntarios</strong> y <strong>eventos</strong> de manera sencilla y eficiente.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'lista_voluntarios' %}" class="btn btn-primary btn-lg">Ver Voluntarios</a>
+            <a href="{% url 'lista_eventos' %}" class="btn btn-success btn-lg">Ver Eventos</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
