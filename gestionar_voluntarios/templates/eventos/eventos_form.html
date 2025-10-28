@@ -23,12 +23,12 @@
     {{ form.descripcion.errors }}
   </div>
 
-  <div class="mb-3">
-    {{ form.voluntarios.label_tag }}
-    {{ form.voluntarios }}
-    <small class="form-text text-muted">Mantén presionada Ctrl (o Cmd en Mac) para seleccionar varios voluntarios.</small>
-    {{ form.voluntarios.errors }}
-  </div>
+<div class="mb-3">
+  {{ form.voluntarios.label_tag }}
+  {{ form.voluntarios }}
+  <div class="form-text">Ctrl/Cmd para seleccionar múltiples.</div>
+  {{ form.voluntarios.errors }}
+</div>
 
   <div class="mt-3">
     <button type="submit" class="btn btn-success">{{ accion }}</button>

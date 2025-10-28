@@ -75,9 +75,10 @@ def crear_evento(request):
         if form.is_valid():
             try:
                 with transaction.atomic():
-                    evento = form.save()
+                    evento = form.save(commit=False)
                     evento.creador = request.user
                     evento.save()
+                    form.save_m2m() 
                 messages.success(request, "Evento creado correctamente.")
                 return redirect('lista_eventos')
             except IntegrityError:
@@ -95,9 +96,10 @@ def actualizar_evento(request, evento_id):
         if form.is_valid():
             try:
                 with transaction.atomic():
-                    form.save()
+                    form.save(commit=False)
                     evento.creador = request.user
                     evento.save()
+                    form.save_m2m()
                 messages.success(request, "Evento actualizado correctamente.")
                 return redirect('lista_eventos')
             except IntegrityError:

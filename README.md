@@ -1,86 +1,149 @@
-En equipos de 3 a 5 personas, desarrollen una aplicación web en Django que implemente un CRUD (Crear, Leer, Actualizar y Eliminar) para gestionar una base de datos específica. Asignen responsabilidades dentro del equipo para optimizar el desarrollo. Cada equipo deberá documentar su proceso y presentar el resultado final.
+## Plataforma de Gestión de Voluntarios – ONG
 
-Contexto del Proyecto
+Este proyecto corresponde a un desarrollo grupal del Bootcamp de Desarrollo Web con Python y Django, cuyo objetivo fue crear una aplicación web para una organización sin fines de lucro (ONG) que permita gestionar voluntarios y eventos comunitarios de forma eficiente y moderna.
 
-Una organización sin fines de lucro necesita una plataforma para gestionar voluntarios que participan en distintos eventos comunitarios. Su equipo ha sido contratado para desarrollar esta aplicación, que permitirá registrar voluntarios, asignarlos a eventos y actualizar su información.
+La plataforma está construida con Django, integra un sistema CRUD completo (crear, leer, actualizar y eliminar) y utiliza Bootstrap 5 para una interfaz limpia y responsiva.
 
-Los modelos principales serán:
+## Funcionalidades principales
 
-Voluntario: Representa a una persona que se ha registrado para ayudar en eventos.
+- Gestión de Voluntarios:
+Permite registrar nuevos voluntarios, actualizar sus datos, ver detalles y eliminar registros.
 
-Evento: Representa actividades organizadas por la ONG.
+- Gestión de Eventos:
+Permite crear, editar, listar y eliminar eventos comunitarios.
 
-Ejemplo de estructura de modelo:
+- Relación entre Eventos y Voluntarios:
+Cada evento puede tener múltiples voluntarios asignados (relación muchos a muchos).
 
-from django.db import models
+- Protección CSRF:
+Todos los formularios incluyen token de seguridad {% csrf_token %}.
 
+- Interfaz intuitiva:
+Navegación mediante barra superior y formularios con diseño responsive.
+
+## Tecnologías utilizadas
+
+| Categoría            | Tecnología                 |
+| -------------------- | -------------------------- |
+| Lenguaje principal   | Python 3.12                |
+| Framework backend    | Django 5.2                 |
+| Base de datos        | MySQL (MariaDB compatible) |
+| Frontend             | HTML5, CSS3, Bootstrap 5   |
+| Control de versiones | Git / GitHub               |
+| Entorno              | Virtualenv                 |
+
+## Instalación y configuración
+1️⃣ Clonar el repositorio
+```bash
+git clone https://github.com/<usuario>/<nombre_repositorio>.git
+cd <nombre_repositorio>
+```
+
+2️⃣ Crear y activar entorno virtual
+```bash
+python -m venv myenv
+myenv\Scripts\activate    # (Windows)
+```
+
+3️⃣ Instalar dependencias
+```bash
+pip install -r requirements.txt
+```
+
+4️⃣ Configurar base de datos en settings.py
+```bash
+Ejemplo:
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "ong_db",
+        "USER": "root",
+        "PASSWORD": "",
+        "HOST": "127.0.0.1",
+        "PORT": "3306",
+    }
+}
+```
+
+5️⃣ Aplicar migraciones
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+6️⃣ Ejecutar el servidor
+```bash
+python manage.py runserver
+```
+
+
+Accede desde tu navegador a:
+👉 http://127.0.0.1:8000/
+
+## Estructura del proyecto
+```bash
+M7_AE6_ABPRO-Ejercicio_grupal/
+│
+├── gestionar_voluntarios/        # App principal
+│   ├── migrations/               # Migraciones de base de datos
+│   ├── templates/                # HTMLs (voluntarios, eventos, base, index)
+│   ├── static/                   # Archivos CSS, JS, imágenes
+│   ├── models.py                 # Modelos: Voluntario y Evento
+│   ├── views.py                  # Vistas CRUD
+│   ├── urls.py                   # Enrutamiento de la app
+│   └── forms.py                  # Formularios
+│
+├── ong/                          # Proyecto principal
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+│
+├── manage.py
+└── README.md
+```
+
+## Modelos principales
+```bash
 class Voluntario(models.Model):
     nombre = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     telefono = models.CharField(max_length=15, blank=True, null=True)
     fecha_registro = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.nombre
-
 class Evento(models.Model):
     titulo = models.CharField(max_length=255)
     descripcion = models.TextField()
     fecha = models.DateField()
-    voluntarios = models.ManyToManyField(Voluntario, related_name="eventos")
+    voluntarios = models.ManyToManyField(Voluntario, related_name="eventos", blank=True)
+```
 
-    def __str__(self):
-        return self.titulo
-Ejercicio 1: Creación de una Aplicación Django para CRUD
+## Interfaz de usuario
 
-Inicien un nuevo proyecto Django y creen una aplicación específica para gestionar los voluntarios y eventos.
+- Hero de bienvenida en la página principal (index.html).
 
-Configuren la base de datos y registren los modelos en admin.py para facilitar la administración.
+- Navbar fija con enlaces a Voluntarios y Eventos.
 
-Ejercicio 2: Interacción entre Aplicaciones, Modelos y Vistas
+- Formularios claros, protegidos con CSRF.
 
-Implementen las vistas necesarias para manejar la lógica de negocio.
+- Listado de registros en tablas con acciones:
 
-Creen plantillas HTML para visualizar la lista de voluntarios, la información de los eventos y los formularios de creación/modificación.
+    - Ver detalles
 
-Ejercicio 3: Manejo de Token de Seguridad CSRF
+    - Editar
 
-Asegúrense de incluir {% csrf_token %} en los formularios HTML para evitar ataques CSRF.
+    - Eliminar
 
-Ejercicio 4: Enrutamiento
+## Equipo de desarrollo
 
-Definan las rutas en urls.py para manejar las diferentes vistas del CRUD.
+Proyecto desarrollado de forma colaborativa en el marco del Módulo 7 del Bootcamp Talento Digital.
 
-Utilicen path() para definir las URLs de cada acción.
+Integrantes
+Joanna Torres
+Matias Lagos
+Catalina Villegas 	
 
-Ejercicio 5: Paso de Parámetros en el Enrutamiento
 
-Implementen rutas dinámicas que reciban el ID del voluntario o evento para modificar o eliminar registros.
+##  Estado del proyecto
 
-Asegúrense de que las vistas correspondan correctamente a los parámetros de la URL.
-
-Ejercicio 6: Selección de Registros
-
-Implementen una vista que recupere y muestre todos los voluntarios y eventos almacenados en la base de datos.
-
-Utilicen Django ORM con Voluntario.objects.all() y Evento.objects.all().
-
-Ejercicio 7: Creación de Registros
-
-Implementen formularios para agregar nuevos voluntarios y eventos.
-
-Utilicen forms.py para definir la estructura del formulario si es necesario.
-
-Ejercicio 8: Modificación de Registros
-
-Implementen la funcionalidad para editar un voluntario o evento.
-
-Recuperen los datos actuales y prellénenlos en un formulario.
-
-Usen Voluntario.objects.get(id=id) para obtener un registro específico.
-
-Ejercicio 9: Eliminación de Registros
-
-Implementen una vista que permita eliminar voluntarios y eventos.
-
-Creen una plantilla HTML que confirme la eliminación antes de ejecutarla.
+✅ Completado y funcional.
